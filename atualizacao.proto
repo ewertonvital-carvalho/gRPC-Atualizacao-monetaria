@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package projuris.empresas;
+
+option java_package = "br.com.softplan.projuris.grpc";
+option java_outer_classname = "AtualizacaoProto";
+
+// Serviço de Atualização Monetária
+service AtualizacaoMonetariaService {
+  // Calcula valor atualizado
+  rpc CalcularValor(CalculoRequest) returns (CalculoResponse);
+  
+  // Lista índices disponíveis
+  rpc ListarIndices(VazioRequest) returns (ListaIndicesResponse);
+}
+
+// Requisição de cálculo
+message CalculoRequest {
+  double valor_original = 1;
+  string indice = 2;           // "IPCA", "IGP-M", etc.
+  string data_inicial = 3;     // "2024-01-01"
+  string data_final = 4;       // "2024-12-31"
+}
+
+// Resposta do cálculo
+message CalculoResponse {
+  double valor_atualizado = 1;
+  double percentual = 2;
+  string mensagem = 3;
+}
+
+// Lista de índices
+message ListaIndicesResponse {
+  repeated string indices = 1;
+}
+
+// Mensagem vazia
+message VazioRequest {}
